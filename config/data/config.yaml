@@ -1,0 +1,6 @@
+date_format: "2006-01-02"
+data_source:
+  license_length_csv: "config/data/license.csv"
+  insurance_group_csv: "config/data/insurance_group.csv"
+  age_factor_csv: "config/data/driver_age.csv"
+  base_csv: "config/data/base_rate.csv"
