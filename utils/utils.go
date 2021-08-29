@@ -5,6 +5,9 @@ import (
 	"time"
 )
 
+type DateHelper struct {
+}
+
 func (dateHelper *DateHelper) AgeFromDate(time time.Time) (int, error) {
 
 	timeNow := dateHelper.Now()
