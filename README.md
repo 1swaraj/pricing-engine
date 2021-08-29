@@ -8,6 +8,8 @@ git clone https://github.com/1swaraj/pricing-engine.git
 
 If you have make installed on your system then :-
 ```makefile
+make build
+make test
 make run
 ```
 
