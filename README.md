@@ -4,6 +4,7 @@
 
 ```
 git clone https://github.com/1swaraj/pricing-engine.git
+cd pricing-engine
 ```
 
 If you have make installed on your system then :-
