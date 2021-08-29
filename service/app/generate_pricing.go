@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"pricingengine"
+	"sort"
 	"time"
 )
 
@@ -67,14 +68,22 @@ func (a *App) GeneratePricing(ctx context.Context, input *pricingengine.Generate
 	}
 
 	// Generating the BaseCost that will be given in the User Response
-	var baseCost []pricingengine.BaseCost
+	var baseCost BaseCosts
 	// BaseCostConfig is the data provided in the CSV
 	baseCostConfig := config.Base
 	// Iterating through the baseCostConfig and finding and appending the baseCost for the
 	// given conditions - drivers age factor, insurance group factor and license length factor
 	for sec, cost := range baseCostConfig {
-		baseCost = append(baseCost, pricingengine.BaseCost{TimeSec: sec, TimeDays: a.DateHelper.Days(sec), TimeHours: a.DateHelper.Hours(sec), BaseRate: cost * licenseLength * driverAgeFactor * insuranceFactor})
+		i := sort.Search(len(baseCost), func(i int) bool { return baseCost[i].TimeSec >= sec })
+		if i < len(baseCost) && baseCost[i].TimeSec == sec {
+			baseCost[i]=pricingengine.BaseCost{TimeSec: sec, TimeDays: a.DateHelper.Days(sec), TimeHours: a.DateHelper.Hours(sec), BaseRate: cost * licenseLength * driverAgeFactor * insuranceFactor}
+		} else {
+			baseCost = append(baseCost, pricingengine.BaseCost{})
+			copy(baseCost[i+1:], baseCost[i:])
+			baseCost[i]=pricingengine.BaseCost{TimeSec: sec, TimeDays: a.DateHelper.Days(sec), TimeHours: a.DateHelper.Hours(sec), BaseRate: cost * licenseLength * driverAgeFactor * insuranceFactor}
+		}
 	}
+	
 	// baseCost is now an array that shows the price in pence for the given factors
 	return &pricingengine.GeneratePricingResponse{BaseCosts: baseCost, LicenseLength: licenseLength, DriverAgeFactor: driverAgeFactor, InsuranceGroup: insuranceFactor}, nil
 }
@@ -91,3 +100,4 @@ func (a *App) InitConfig() (err error) {
 	}
 	return
 }
+

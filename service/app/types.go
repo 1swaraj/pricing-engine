@@ -1,6 +1,7 @@
 package app
 
 import (
+	"pricingengine"
 	"pricingengine/config"
 	"pricingengine/utils"
 )
@@ -11,3 +12,5 @@ type App struct {
 	Config     config.IConfig
 	DateHelper utils.DateHelper
 }
+
+type BaseCosts []pricingengine.BaseCost
