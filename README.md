@@ -8,7 +8,7 @@ cd pricing-engine
 ```
 
 If you have make installed on your system then :-
-```makefile
+```
 make build
 make test
 make run
