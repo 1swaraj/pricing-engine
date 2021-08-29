@@ -64,7 +64,7 @@ This directory has code that is primarily concerned with the config management l
 ###### rpc
 Implements the rpc call mechanism (go-chi)
 
-###### utils
+##### utils
 1. interface.go :-
    1. Defines the IDateHelper interface
    2. This interface will be helpful in generating mocks for testing
